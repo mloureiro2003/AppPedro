@@ -1,0 +1,61 @@
+[
+  {
+    "name": "teste",
+    "fighters": [
+      {
+        "name": "charTeste",
+        "dex": 1,
+        "hp": 1,
+        "san": 1,
+        "cons": 1,
+        "pow": 1,
+        "magic": 0,
+        "type": "Character"
+      },
+      {
+        "name": "charTeste2",
+        "dex": 2,
+        "hp": 2,
+        "san": 2,
+        "cons": 2,
+        "pow": 2,
+        "magic": 0,
+        "type": "Character"
+      },
+      {
+        "name": "npcTeste",
+        "dex": 1,
+        "hp": 0,
+        "san": 1,
+        "cons": 1,
+        "pow": 1,
+        "spells": [
+          {
+            "name": "spellTeste2",
+            "cost": {
+              "MP": 2,
+              "SP": 2,
+              "PP": 2
+            },
+            "time": "2"
+          }
+        ],
+        "magic": 0,
+        "fight": 1,
+        "str": 1,
+        "size": 1,
+        "dodge": 1,
+        "weapons": [
+          {
+            "name": "weaponTeste",
+            "skill": 2,
+            "damage": "1d4",
+            "flagBonus": false,
+            "flagBuild": false
+          }
+        ],
+        "type": "NPC"
+      }
+    ]
+  }
+]

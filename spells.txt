@@ -1,0 +1,10 @@
+[
+  {
+    "name": "spellTeste",
+    "time": "1"
+  },
+  {
+    "name": "spellTeste2",
+    "time": "2"
+  }
+]

@@ -1,0 +1,16 @@
+[
+  {
+    "name": "weaponTeste",
+    "skill": 2,
+    "damage": "1d4",
+    "flagBonus": false,
+    "flagBuild": false
+  },
+  {
+    "name": "weaponTeste2",
+    "skill": "blank",
+    "damage": "2d4",
+    "flagBonus": false,
+    "flagBuild": false
+  }
+]

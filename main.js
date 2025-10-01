@@ -1571,7 +1571,7 @@ let CheatSheet = {
 
 function menu(){
   let choice = 1
-  while (choice != 6){
+  while (choice != 7){
     console.log("\n1 - Add new spell to database")
     console.log("2 - Add new weapon to database")
     console.log("3 - See character related options")
@@ -1593,7 +1593,7 @@ function menu(){
       NPC.NPCMenu()
     } else if (choice === 5){
       Combat.menuCombat()
-    } else {
+    } else (choice === 6){
       CheatSheet.listCheats()
     }
   }

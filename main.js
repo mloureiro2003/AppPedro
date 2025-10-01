@@ -62,8 +62,8 @@ function saveData(filePath, data) {
 class Cost{
   constructor(MP, SP, PP) {
     this.MP = parseInt(MP) || 0;
-    this.SP = parseInt(MP) || 0;
-    this.PP = parseInt(MP) || 0;
+    this.SP = parseInt(SP) || 0;
+    this.PP = parseInt(PP) || 0;
   }
 
   static newCost(){

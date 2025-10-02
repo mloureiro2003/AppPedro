@@ -38,13 +38,12 @@ function validateNumber(value, maxInclusive) {
 // ===============================
 // Files
 // ===============================
-
 function loadData(filePath) {
   if (fs.existsSync(filePath)) {
     const data = fs.readFileSync(filePath, "utf8");
     try {
       return JSON.parse(data);
-     } catch (err) {
+    } catch (err) {
       console.log(`\nError parsing ${filePath}:`, err);
       return [];
     }
@@ -63,8 +62,8 @@ function saveData(filePath, data) {
 class Cost{
   constructor(MP, SP, PP) {
     this.MP = parseInt(MP) || 0;
-    this.SP = parseInt(SP) || 0;
-    this.PP = parseInt(PP) || 0;
+    this.SP = parseInt(MP) || 0;
+    this.PP = parseInt(MP) || 0;
   }
 
   static newCost(){
@@ -168,33 +167,33 @@ class Spell {
 // Class Weapon
 // ===============================
 class Weapon {
-   constructor(name, skill, damage, flagBonus=false, flagBuild=false) {
+  constructor(name, skill, damage, flagBonus=false, flagBuild=false) {
     this.name = name;
     this.skill = skill;
     this.damage = damage;
     this.flagBonus = flagBonus;
-     this.flagBuild = flagBuild
-   }
+    this.flagBuild = flagBuild
+  }
   
-   static weapons = [];
-   static filePath = "./weapons.json"
+  static weapons = [];
+  static filePath = "./weapons.txt"
 
-   static load(){
-     const raw = loadData(Weapon.filePath)
-      Weapon.weapons = raw.map(w => new Weapon(
-        w.name,
-        w.skill,
-        w.damage,
-        w.flagBonus ?? false,
-        w.flagBuild ?? false
+  static load(){
+    const raw = loadData(Weapon.filePath)
+     Weapon.weapons = raw.map(w => new Weapon(
+      w.name,
+      w.skill,
+      w.damage,
+      w.flagBonus ?? false,
+      w.flagBuild ?? false
     ));
   }
 
-   static save(){
+  static save(){
     saveData(Weapon.filePath, Weapon.weapons)
-   }
+  }
 
-   static newWeapon(){
+  static newWeapon(){
     console.log("\nWeapon's name");
     let name = prompt().trim();
 
@@ -203,81 +202,81 @@ class Weapon {
     console.log("\nWeapon's damage (use DB for demage bonus from body)");
     let damage = prompt().trim();
 
-     let flagBonus = false;
+    let flagBonus = false;
     let flagBuild = false;
 
-      const parts = damage.split("+");
-     if (parts.length === 3){
-       flagBonus = true
-       flagBuild = true
-     } else if (parts.length === 2){
-       let part = parts[1].trim();
+     const parts = damage.split("+");
+    if (parts.length === 3){
+      flagBonus = true
+      flagBuild = true
+    } else if (parts.length === 2){
+      let part = parts[1].trim();
       if (part === 'DB' || part.toLowerCase() === 'half db' || part === '1/2 DB') {
         flagBuild = true
-       } else{
+      } else{
         flagBonus = true
       }
-     }
+    }
     const weapon = new Weapon(name, skill, damage, flagBonus, flagBuild);
     Weapon.weapons.push(weapon);
     console.log(`\nWeapon "${name}" has been added.`);
-     Weapon.save()
-     return weapon;
-   }
+    Weapon.save()
+    return weapon;
+  }
 
-   static addWeapon(array) {
+  static addWeapon(array) {
     let flag = true;
-     while (flag) {
-     if (Weapon.weapons.length === 0) {
-       console.log('\nNo weapon in the database. Create a new one.');
+    while (flag) {
+    if (Weapon.weapons.length === 0) {
+      console.log('\nNo weapon in the database. Create a new one.');
       array.push(Weapon.newWeapon());
     } else {
-       list('\nWeapons', Weapon.weapons);
-       console.log(`${Weapon.weapons.length + 1}: Add new weapon`);
-       console.log("\nChoose the weapon's name")
-       let number = validateNumber(prompt(), Weapon.weapons.length + 1);
-       if (number === Weapon.weapons.length + 1) {
-       let weapon = Weapon.newWeapon()
-       console.log("Value of npc's skill with this weapon:")
-       let value = prompt()
-        value = validateNumber(value, 100)
-       weapon.skill = value
-        array.push(weapon);
-       } else {
-       let weapon = Weapon.weapons[number - 1]
+      list('\nWeapons', Weapon.weapons);
+      console.log(`${Weapon.weapons.length + 1}: Add new weapon`);
+      console.log("\nChoose the weapon's name")
+      let number = validateNumber(prompt(), Weapon.weapons.length + 1);
+      if (number === Weapon.weapons.length + 1) {
+        let weapon = Weapon.newWeapon()
         console.log("Value of npc's skill with this weapon:")
         let value = prompt()
-       value = validateNumber(value, 100)
+        value = validateNumber(value, 100)
         weapon.skill = value
         array.push(weapon);
-       }
-     }
+      } else {
+        let weapon = Weapon.weapons[number - 1]
+        console.log("Value of npc's skill with this weapon:")
+        let value = prompt()
+        value = validateNumber(value, 100)
+        weapon.skill = value
+        array.push(weapon);
+      }
+    }
     flag = loopControl('\nDo you wish to add more weapons?');
     }
-   }
+  }
 
   static showWeapon(weapon, npc){
     let name = `${weapon.name}`
     let skill = parcels(weapon.skill)
     let damage = weapon.damage
     if (weapon.flagBonus || weapon.flagBuild) {
-       let damageBase = damage.split("+")[0];
-       let calculatedDamage = damageBase;
+      let damageBase = damage.split("+")[0];
+      let calculatedDamage = damageBase;
 
-       if (weapon.flagBuild) {
-       calculatedDamage += NPC.NPCBuild(npc);
-       }
+      if (weapon.flagBuild) {
+        calculatedDamage += NPC.NPCBuild(npc);
+      }
         
       if (weapon.flagBonus) {
-       let bonusPart = damage.split("+").slice(1).find(p => p.trim() !== 'DB' && p.toLowerCase() !== 'half db' && p !== '1/2 DB');
-       if (bonusPart) {
-        calculatedDamage += `+${bonusPart.trim()}`;
-       }
+        let bonusPart = damage.split("+").slice(1).find(p => p.trim() !== 'DB' && p.toLowerCase() !== 'half db' && p !== '1/2 DB');
+        if (bonusPart) {
+          calculatedDamage += `+${bonusPart.trim()}`;
+        }
       }
-       damage = calculatedDamage;
+      damage = calculatedDamage;
     }
     console.log(`${name} (${skill}) - ${damage}`);
-     return `${name} (${skill}) - ${damage}`; 
+    return `${name} (${skill}) - ${damage}`; 
 
   }
 
@@ -343,7 +342,7 @@ class Fighter {
     }
   )}
 
-  static inflictDamageFigher(localFighters, i, characterTurn){
+  static inflictDamageFigher(localFighters, characterTurn){
     console.log("Choose which stats were demaged:")
 
     console.log("Choose the type(s) of demage inflicted:")
@@ -352,12 +351,12 @@ class Fighter {
 
     console.log("\n=== Fighters ===");
     localFighters.forEach((f, index) => {
-      if (index != i){
+      if (index != characterTurn){
         console.log(`${index}: ${f.name}`);
       }
     });
     console.log("\nSelect fighters by index");
-    let selectionIndices = prompt().split(",").map(s => parseInt(s.trim())).filter(n => !isNaN(n) && n >= 0 && n < localFighters.length && n !== i);
+    let selectionIndices = prompt().split(",").map(s => parseInt(s.trim())).filter(n => !isNaN(n) && n >= 0 && n < localFighters.length && n !== characterTurn);
 
     for (const stat of selectionDemage){
       for (let j = selectionIndices.length - 1; j >= 0; j--) {
@@ -1017,10 +1016,11 @@ class Combat {
         })
 
         console.log("\nHit Y if the character inflicted damage on someone, M if they cast a spell, or just press enter to go to the next turn. If multiple, separate by comma.")
-        let flagHit = prompt().split(",").map(s => s.trim());
+        let flagHit = prompt().toUpperCase()
+        flagHit = flagHit.split(",").map(s => s.trim());
 
         if (flagHit.includes('Y')){
-          const result = Fighter.inflictDamageFigher(localFighters, i, characterTurn)
+          const result = Fighter.inflictDamageFigher(localFighters, characterTurn)
           localFighters =  result.localFighters
           characterTurn = result.characterTurn
         }
@@ -1572,7 +1572,7 @@ let CheatSheet = {
 
 function menu(){
   let choice = 1
-  while (choice != 7){
+  while (choice != 6){
     console.log("\n1 - Add new spell to database")
     console.log("2 - Add new weapon to database")
     console.log("3 - See character related options")
@@ -1594,7 +1594,7 @@ function menu(){
       NPC.NPCMenu()
     } else if (choice === 5){
       Combat.menuCombat()
-    } else if (choice === 6){
+    } else {
       CheatSheet.listCheats()
     }
   }
